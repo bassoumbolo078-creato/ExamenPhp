@@ -56,24 +56,24 @@ class ReservationModel
     }
 
 
-    public static function GetChiffreAffaires(): float
-    {
-        $sql = "SELECT SUM(
-                    nombre_nuits *
-                    CASE type_chambre
-                        WHEN 'STANDARD' THEN 25000
-                        WHEN 'CONFORT'  THEN 50000
-                        WHEN 'SUITE'    THEN 100000
-                    END
-                ) AS total
-                FROM reservations
-                WHERE statut = 'VALIDEE'";
+public function GetChiffreAffaires(): float
+{
+    $sql = "SELECT SUM(
+                nombre_nuits *
+                CASE type_chambre
+                    WHEN 'STANDARD' THEN 25000
+                    WHEN 'CONFORT'  THEN 50000
+                    WHEN 'SUITE'    THEN 100000
+                END
+            ) AS total
+            FROM reservations
+            WHERE statut = 'VALIDEE'";
 
-        $stmt = $this->pdo->query($sql);
-        $result = $stmt->fetchColumn();
+    $stmt = $this->pdo->query($sql);
+    $result = $stmt->fetchColumn();
 
-        return $result !== null ? (float) $result : 0.0;
-    }
+    return $result !== null ? (float) $result : 0.0;
+}
 
  
     public function getLongestStay(): array
